@@ -91,8 +91,9 @@ function buildFindings(A, B) {
   else F.push({ t: "No breakeven inside the horizon", warn: true,
     d: `The proposal never catches up within ${H} years on cost alone. The deal needs a non-cost driver — risk, capability, or EOL pressure — or cheaper inputs.` });
 
+  const art = /^(8|11|18)/.test(String(S.g.discount)) ? "an" : "a";
   F.push({ t: `Risk-adjusted value: ${fmt$(npvSav)} NPV`,
-    d: `At a ${S.g.discount}% cost of capital, the discounted savings are ${fmt$(npvSav)}. Finance teams think in NPV — bring this number, not just the sticker total.` });
+    d: `At ${art} ${S.g.discount}% cost of capital, the discounted savings are ${fmt$(npvSav)}. Finance teams think in NPV — bring this number, not just the sticker total.` });
 
   // biggest cost driver in current
   const c = S.cur;
