@@ -95,17 +95,28 @@ function buildFindings(A, B) {
   F.push({ t: `Risk-adjusted value: ${fmt$(npvSav)} NPV`,
     d: `At ${art} ${S.g.discount}% cost of capital, the discounted savings are ${fmt$(npvSav)}. Finance teams think in NPV — bring this number, not just the sticker total.` });
 
-  // biggest cost driver in current
+  // biggest cost driver in current — compare horizon totals, not per-year values
   const c = S.cur;
+  const u = S.g.uplift / 100;
+  const upliftSum = Array.from({ length: H }, (_, i) => Math.pow(1 + u, i)).reduce((a, b) => a + b, 0);
+  const hwBuys = 1 + (c.hwRefresh >= 1 && c.hwRefresh <= H ? 1 : 0); // year-1 buy + refresh, mirroring compute()
   const drivers = [
-    ["Maintenance & support", c.support], ["Software / subscription", c.swAnnual],
-    ["Hardware capex", c.hardware], ["Admin labor", A.adminAnnual],
-    ["Power", A.powerAnnual], ["Downtime / risk", c.downtime], ["Facilities", c.facilities],
+    ["Maintenance & support", c.support * upliftSum],
+    ["Software / subscription", c.swAnnual * upliftSum],
+    ["Hardware capex", c.hardware * hwBuys],
+    ["Software licenses (one-time)", c.swOnce],
+    ["Migration & professional services", c.migration],
+    ["Admin labor", A.adminAnnual * upliftSum],
+    ["Power", A.powerAnnual * upliftSum],
+    ["Downtime / risk", c.downtime * upliftSum],
+    ["Facilities", c.facilities * upliftSum],
+    ["Other annual", c.otherAnnual * upliftSum],
   ].sort((x, y) => y[1] - x[1]);
-  F.push({ t: `Biggest current-state cost: ${drivers[0][0]} at ${fmt$(drivers[0][1] * (drivers[0][0]==="Hardware capex" ? 1 : H))}`,
+  const recurTotal = A.base * upliftSum;
+  F.push({ t: `Biggest current-state cost: ${drivers[0][0]} at ${fmt$(drivers[0][1])}`,
     d: drivers[0][0] === "Hardware capex"
       ? "Capex dominates — the refresh conversation is really a financing conversation."
-      : `Recurring spend dominates. ${fmtPct((A.base * H) / A.tco)} of current TCO is opex you pay every year whether you refresh or not.` });
+      : `Recurring spend dominates. ${A.tco > 0 ? fmtPct(recurTotal / A.tco) : "—"} of current TCO is opex you pay every year whether you refresh or not.` });
 
   const fte = c.adminHrs / 40;
   if (c.adminHrs > 0) F.push({ t: `${fte.toFixed(2)} FTE tied up in admin (${fmt$(A.adminAnnual)}/yr)`,
