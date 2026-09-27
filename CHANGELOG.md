@@ -8,3 +8,4 @@
 - Outputs: KPI cards (TCO, savings, NPV savings, breakeven, avg annual savings), cumulative TCO chart with breakeven marker, year-by-year table, auto-generated SE findings, downloadable standalone HTML report.
 - Projects: named saves, export/import JSON, autosave with session restore.
 - Linked from the SE Command Center App Launcher.
+- Fixed: biggest-cost-driver finding now ranks by full-horizon totals instead of comparing one-time capex against annual figures. Added Other annual, Software licenses (one-time), and Migration & professional services to the ranking. Fixed NaN% on blank canvas.
