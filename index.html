@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCO Calculator — Total cost of ownership, modeled year by year</title>
+<link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#" id="brand-home"><span class="glyph">🧮</span>TCO Calculator</a>
+    <nav class="site">
+      <a href="#calculator" data-nav="app">Calculator</a>
+      <a href="#how" data-nav="landing">How it works</a>
+      <a href="#faq" data-nav="landing">FAQ</a>
+      <a href="#changelog" data-nav="landing">Changelog</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ LANDING ============ -->
+<div id="landing">
+  <div class="wrap">
+    <div class="hero">
+      <span class="kicker">SE deal economics</span>
+      <h1>What's it really going to cost?</h1>
+      <p class="lede">Model total cost of ownership year by year — current state vs. proposed — with NPV, breakeven, and plain-English findings you can take into a deal review. A model, not a quote.</p>
+      <div class="cta-row">
+        <button class="btn primary" id="cta-open">Open the calculator</button>
+        <button class="btn" id="cta-demo">Load demo data</button>
+      </div>
+    </div>
+
+    <section class="block" id="how">
+      <h2 class="sec">How it works</h2>
+      <p class="sec-sub">Four steps from blank page to deal-review-ready.</p>
+      <div class="grid3">
+        <div class="step"><div class="n">1</div><h3>Enter the costs</h3><p>Hardware, software, support, power, facilities, admin time, downtime risk, migration — for the current state and the proposal. Or load the demo to see it working.</p></div>
+        <div class="step"><div class="n">2</div><h3>Set the horizon</h3><p>Pick 3, 5, or 7 years, add your cost of capital for NPV and an annual cost-uplift assumption. Watch the math update live.</p></div>
+        <div class="step"><div class="n">3</div><h3>Read the findings</h3><p>Breakeven year, biggest cost drivers, recurring-opex share, power and staffing deltas — written as SE talking points, not spreadsheet cells.</p></div>
+        <div class="step"><div class="n">4</div><h3>Download the report</h3><p>A standalone HTML report with the inputs, year-by-year tables, and findings. Save the project, export it, pick it back up next quarter.</p></div>
+      </div>
+    </section>
+
+    <section class="block" id="faq">
+      <h2 class="sec">FAQ</h2>
+      <p class="sec-sub">The fine print, up front.</p>
+      <details class="faq">
+        <summary>Is this a quote?</summary>
+        <div class="body"><p>No. This is a <strong>model</strong>, not a quote and not financial advice. It turns your cost assumptions into year-by-year TCO, NPV, and breakeven math. Every output is only as good as the inputs — validate hardware, licensing, and services pricing against real distributor quotes before anything customer-facing.</p></div>
+      </details>
+      <details class="faq">
+        <summary>What goes in "downtime / risk cost"?</summary>
+        <div class="body"><p>Your best estimate of the expected annual cost of outages and incidents on the current platform: lost productivity, SLA penalties, emergency support, revenue impact. It's the fuzziest input here — keep it conservative and say so in the room.</p></div>
+      </details>
+      <details class="faq">
+        <summary>Why does it ask for a discount rate?</summary>
+        <div class="body"><p>Money today is worth more than money in year 5. The discount rate (your cost of capital) converts future costs into net present value so you're comparing scenarios honestly. 8% is a common default; your finance team will have an opinion.</p></div>
+      </details>
+      <details class="faq">
+        <summary>Can I compare more than two scenarios?</summary>
+        <div class="body"><p>Two at a time: current state vs. one proposal. To compare two proposals, run the pair twice and keep both projects saved. Named saves, export, and import make that painless.</p></div>
+      </details>
+      <details class="faq">
+        <summary>Where is my data stored?</summary>
+        <div class="body"><p>In your browser's localStorage — on your machine, nowhere else. Named projects, autosave, and exports never leave your device. Close the tab on a shared machine and it's still there for the next user of that browser, so use Start over on shared machines.</p></div>
+      </details>
+    </section>
+
+    <section class="block" id="changelog">
+      <h2 class="sec">Changelog</h2>
+      <p class="sec-sub">What shipped, newest first.</p>
+      <details class="changelog" open>
+        <summary>Changelog</summary>
+        <div class="cbody" id="changelog-body"><p>Loading…</p></div>
+      </details>
+    </section>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="appview">
+  <div class="wrap" id="calculator">
+    <div class="toolbar">
+      <button class="btn small" id="btn-back">← Landing</button>
+      <div class="spacer"></div>
+      <div class="projbar">
+        <select id="proj-select" title="Saved projects"><option value="">Saved projects…</option></select>
+        <button class="btn small" id="btn-save">Save</button>
+        <button class="btn small" id="btn-export">Export</button>
+        <button class="btn small" id="btn-import">Import</button>
+        <input type="file" id="file-import" accept=".json" style="display:none">
+      </div>
+      <button class="btn small" id="btn-demo">Demo data</button>
+      <button class="btn small" id="btn-report">Download report</button>
+      <button class="btn small" id="btn-reset">Start over</button>
+    </div>
+
+    <div class="disclaimer">🧮 <strong>Model, not a quote.</strong> Outputs are only as good as your inputs. Validate pricing against real distributor quotes before anything customer-facing.</div>
+
+    <div class="panel">
+      <h2>Global settings</h2>
+      <p class="hint">Horizon, cost of capital, and the annual uplift applied to recurring costs.</p>
+      <div class="setrow">
+        <div class="set"><label>Time horizon</label>
+          <select id="g-horizon"><option value="3">3 years</option><option value="5" selected>5 years</option><option value="7">7 years</option></select></div>
+        <div class="set"><label>Discount rate (NPV) <span class="unit">%</span></label>
+          <input type="number" id="g-discount" value="8" min="0" max="30" step="0.5"></div>
+        <div class="set"><label>Annual cost uplift <span class="unit">%</span></label>
+          <input type="number" id="g-uplift" value="3" min="0" max="20" step="0.5"></div>
+        <div class="set"><label>Electricity rate <span class="unit">$/kWh</span></label>
+          <input type="number" id="g-kwh" value="0.18" min="0" max="2" step="0.01"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Scenarios</h2>
+      <p class="hint">Fill in both sides. Power and admin time are converted to annual dollars automatically.</p>
+      <div class="scen-tabs">
+        <button class="scen-tab active" data-s="current" id="tab-current">Current state</button>
+        <button class="scen-tab" data-s="proposed" id="tab-proposed">Proposed</button>
+      </div>
+      <div class="setrow" style="margin-bottom:14px">
+        <div class="set" style="min-width:260px"><label>Scenario name</label><input type="text" id="s-name" value="Current state"></div>
+      </div>
+      <div class="fgrid" id="scenario-fields"></div>
+    </div>
+
+    <div class="kpis" id="kpis"></div>
+
+    <div class="chart-wrap">
+      <h2>Cumulative TCO over time</h2>
+      <canvas id="tco-chart"></canvas>
+      <div class="legend">
+        <span><span class="sw" style="background:#2f9be8"></span><span id="lg-cur">Current</span></span>
+        <span><span class="sw" style="background:#7c5cf6"></span><span id="lg-pro">Proposed</span></span>
+        <span><span class="sw" style="background:#34d399"></span>Cumulative savings</span>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Year-by-year breakdown</h2>
+      <p class="hint">Undiscounted dollars. Parentheses are costs; savings are proposed minus current.</p>
+      <div style="overflow-x:auto"><table class="years" id="year-table"></table></div>
+    </div>
+
+    <div class="panel">
+      <h2>Findings</h2>
+      <p class="hint">Auto-generated talking points for the deal review.</p>
+      <div id="findings"></div>
+    </div>
+  </div>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    <span>🧮 TCO Calculator — a model, not a quote. Validate pricing before customer conversations.</span>
+    <span>Part of the <a href="https://scribnetai.github.io/se-command-center/">SE Command Center</a> toolkit.</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js?v=1"></script>
+</body>
+</html>
