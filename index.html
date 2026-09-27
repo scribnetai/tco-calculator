@@ -4,12 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TCO Calculator — Total cost of ownership, modeled year by year</title>
-<link rel="stylesheet" href="styles.css?v=1">
+<link rel="stylesheet" href="styles.css?v=2">
 </head>
 <body>
 <header class="site">
   <div class="wrap">
-    <a class="brand" href="#" id="brand-home"><span class="glyph">🧮</span>TCO Calculator</a>
+    <div class="brand-dropdown" id="brandDropdown">
+      <button class="brand" id="brandHome" aria-haspopup="true" aria-expanded="false" title="Switch app">
+        <span class="glyph">🧮</span>TCO Calculator
+        <span class="brand-caret">▾</span>
+      </button>
+      <div class="brand-menu" id="brandMenu" role="menu" aria-label="Switch app"></div>
+    </div>
     <nav class="site">
       <a href="#calculator" data-nav="app">Calculator</a>
       <a href="#how" data-nav="landing">How it works</a>
@@ -162,6 +168,7 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="app.js?v=2"></script>
+<script src="app-switcher.js?v=1"></script>
+<script src="app.js?v=3"></script>
 </body>
 </html>

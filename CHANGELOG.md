@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-09-27
+- Added top-left app-switcher dropdown on the brand mark: one-click jumps to every app in the suite (full index, this page marked).
 - Launched TCO Calculator: year-by-year total cost of ownership modeling, current state vs proposed.
 - Inputs: hardware capex + refresh year, software (one-time + annual), support, power (kW × rate × PUE), facilities, admin time, downtime/risk, migration, other annual.
 - Global settings: 3/5/7-year horizon, discount rate for NPV, annual cost uplift.

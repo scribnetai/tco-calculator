@@ -367,7 +367,6 @@ document.querySelectorAll("nav.site a").forEach((a) =>
     if (mode === "app") { if ($("appview").style.display !== "block") openApp(); $("calculator").scrollIntoView({ behavior: "smooth" }); }
     else showLanding(hash);
   }));
-$("brand-home").addEventListener("click", (e) => { e.preventDefault(); showLanding(); });
 $("cta-open").addEventListener("click", openApp);
 $("cta-demo").addEventListener("click", () => { openApp(); loadDemo(); });
 $("btn-back").addEventListener("click", () => showLanding());
