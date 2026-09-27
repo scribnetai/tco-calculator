@@ -1,6 +1,9 @@
 # Changelog
 
 ## 2026-09-27
+- Added a favicon (inline SVG monogram badge, matching the other apps) so browser bookmarks and tabs show the app logo instead of a generic globe.
+
+## 2026-09-27
 - Added top-left app-switcher dropdown on the brand mark: one-click jumps to every app in the suite (full index, this page marked).
 - Launched TCO Calculator: year-by-year total cost of ownership modeling, current state vs proposed.
 - Inputs: hardware capex + refresh year, software (one-time + annual), support, power (kW × rate × PUE), facilities, admin time, downtime/risk, migration, other annual.
