@@ -1,6 +1,6 @@
 # TCO Calculator
 
-Year-by-year total cost of ownership modeling for presales SEs. Live at https://scribnetai.github.io/tco-calculator/
+Year-by-year total cost of ownership modeling for presales SEs. Live at https://tco-calculator.scribnet.io/
 
 Compare "current state" vs "proposed" across hardware, software, support, power,
 facilities, admin labor, downtime risk, and migration — with NPV, breakeven year,
