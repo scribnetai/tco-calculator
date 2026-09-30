@@ -33,3 +33,8 @@
 - Projects: named saves, export/import JSON, autosave with session restore.
 - Linked from the SE Command Center App Launcher.
 - Fixed: biggest-cost-driver finding now ranks by full-horizon totals instead of comparing one-time capex against annual figures. Added Other annual, Software licenses (one-time), and Migration & professional services to the ranking. Fixed NaN% on blank canvas.
+
+## 2026-09-29 — Prompts removed from app-switcher dropdown
+
+- Removed the Prompts entry from the in-app dropdown menu so it lists only the SE-job apps (plus the scribnet.io home link). The prompts page itself is untouched.
+
